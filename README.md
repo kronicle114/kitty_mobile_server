@@ -11,7 +11,9 @@
 ## dev instructions
 
 1. npm install
-2. npm start
+2. spin up a daemon, usually do `mongod`
+3. npm start
+4. start doing server stuff (make reqs on endpoints, maybe do the cheese test)
 
 ## troubleshooting
 
