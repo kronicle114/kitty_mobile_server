@@ -7,3 +7,8 @@
 3. Create a cluster
 4. Create a database
 5. Connect db to app
+
+## dev instructions
+
+1. npm install
+2. npm start
