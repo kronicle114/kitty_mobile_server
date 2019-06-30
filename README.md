@@ -2,11 +2,11 @@
 
 ## Steps
 
-1. Create a mongodDB account through register
-2. Build your first cluster biaaaaatch
-3. Create a cluster
-4. Create a database
-5. Connect db to app
+1. Create a mongodDB account through [register](https://cloud.mongodb.com/user?_ga=2.143925813.1205106697.1561888201-84316061.1558637210#/atlas/register/accountProfile)
+2. Create a cluster
+3. Create a database
+4. Connect db to app
+5. Create CRUD endpoints
 
 ## dev instructions
 
