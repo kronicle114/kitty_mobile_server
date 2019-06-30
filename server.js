@@ -49,30 +49,35 @@ app.use(function(req, res, next) {
   next();
 });
 
-const cheeses = [
-  "Bath Blue",
-  "Barkham Blue",
-  "Buxton Blue",
-  "Cheshire Blue",
-  "Devon Blue",
-  "Dorset Blue Vinney",
-  "Dovedale",
-  "Exmoor Blue",
-  "Harbourne Blue",
-  "Lanark Blue",
-  "Lymeswold",
-  "Oxford Blue",
-  "Shropshire Blue",
-  "Stichelton",
-  "Stilton",
-  "Blue Wensleydale",
-  "Yorkshire Blue"
-];
+// const cheeses = [
+//   "Bath Blue",
+//   "Barkham Blue",
+//   "Buxton Blue",
+//   "Cheshire Blue",
+//   "Devon Blue",
+//   "Dorset Blue Vinney",
+//   "Dovedale",
+//   "Exmoor Blue",
+//   "Harbourne Blue",
+//   "Lanark Blue",
+//   "Lymeswold",
+//   "Oxford Blue",
+//   "Shropshire Blue",
+//   "Stichelton",
+//   "Stilton",
+//   "Blue Wensleydale",
+//   "Yorkshire Blue"
+// ];
 
 // Mount routers
 app.get("/api/cheeses", (req, res, next) => {
   console.log("hitting tis");
-  return res.json(cheeses);
+  return res.json("hello");
+});
+
+app.get("/api/cheese", (req, res, next) => {
+  console.log("meep");
+  return res.json("i am a cheese");
 });
 
 //requires authToken (protected endpoints)
