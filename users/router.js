@@ -6,17 +6,29 @@ const { User } = require("./models");
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-router.get("/", jsonParser, (req, res) => {
-  return User.find();
+/* ====== GET ALL USERS ====== */
+// Used in registration validation for duplicate username
+router.get("/", (req, res, next) => {
+  const { search } = req.query;
+  let filter = {};
+
+  if (search) {
+    // const re = new RegExp(search, 'i');
+    filter.$or = [{ username: search }];
+  }
+
+  return User.find(filter)
+    .then(users => res.json(users.map(user => user.serialize())))
+    .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
 router.post("/", jsonParser, (req, res) => {
   const requiredFields = ["username", "password"];
   const missingField = requiredFields.find(field => !(field in req.body));
 
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
   if (missingField) {
-    console.log("missingfield?: ", missingField);
+    // console.log("missingfield?: ", missingField);
     return res.status(422).json({
       code: 422,
       reason: "ValidationError",

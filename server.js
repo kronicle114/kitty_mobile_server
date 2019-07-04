@@ -1,15 +1,12 @@
-"use strict";
-
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const passport = require("passport");
-
+const bodyParser = require("body-parser");
 const { error404, error500 } = require("./error-middleware");
 const { PORT, CLIENT_ORIGIN } = require("./config");
 const { dbConnect } = require("./db-mongoose");
-
 const { router: usersRouter } = require("./users");
 const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 
@@ -31,6 +28,12 @@ app.use(express.static("public"));
 // Parse request body
 app.use(express.json());
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+
 cors;
 app.use(
   cors({
@@ -49,35 +52,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-// const cheeses = [
-//   "Bath Blue",
-//   "Barkham Blue",
-//   "Buxton Blue",
-//   "Cheshire Blue",
-//   "Devon Blue",
-//   "Dorset Blue Vinney",
-//   "Dovedale",
-//   "Exmoor Blue",
-//   "Harbourne Blue",
-//   "Lanark Blue",
-//   "Lymeswold",
-//   "Oxford Blue",
-//   "Shropshire Blue",
-//   "Stichelton",
-//   "Stilton",
-//   "Blue Wensleydale",
-//   "Yorkshire Blue"
-// ];
-
 // Mount routers
 app.get("/api/cheeses", (req, res, next) => {
-  console.log("hitting tis");
-  return res.json("hello");
-});
-
-app.get("/api/cheese", (req, res, next) => {
   console.log("meep");
-  return res.json("i am a cheese");
+  return res.send("i am a cheese");
 });
 
 //requires authToken (protected endpoints)
