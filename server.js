@@ -28,6 +28,9 @@ app.use(express.static("public"));
 // Parse request body
 app.use(express.json());
 
+//create cat model
+const Cat = mongoose.model("Cat", { name: String });
+
 app.use(
   bodyParser.urlencoded({
     extended: true
@@ -56,6 +59,21 @@ app.use(function(req, res, next) {
 app.get("/api/cheeses", (req, res, next) => {
   console.log("meep");
   return res.send("i am a cheese");
+}); //cheese test :D
+
+app.get("/api/add-kitty", (req, res, next) => {
+  const kitty = new Cat({ name: "Bruno" });
+  kitty.save().then(() => console.log("nyahh nyah"));
+  res.send(kitty);
+});
+
+app.get("/api/get-cats", async (req, res) => {
+  try {
+    let cats = await Cat.find();
+    res.send(cats);
+  } catch {
+    res.send({ error: error.message });
+  }
 });
 
 //requires authToken (protected endpoints)
