@@ -1,4 +1,3 @@
-"use strict";
 /* 
  if you get the following error below, this is because you need to whitelist the IP address on mongodb
 
@@ -18,7 +17,9 @@ module.exports = {
   PORT: process.env.PORT || 8085,
   DATABASE_URL:
     process.env.DATABASE_URL ||
-    `mongodb+srv://${MONGO_USER}:${MONGO_PW}@${CLUSTER_NAME}.mongodb.net/test?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW}@${
+      process.env.CLUSTER_NAME
+    }.mongodb.net/test?retryWrites=true&w=majority`,
   TEST_DATABASE_URL:
     process.env.TEST_DATABASE_URL || "mongodb://localhost/kitty_development",
   JWT_SECRET: process.env.JWT_SECRET,

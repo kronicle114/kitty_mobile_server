@@ -89,7 +89,6 @@ app.use(error404);
 app.use(error500);
 
 const runServer = (port = PORT) => {
-  console.log("hmm", PORT);
   const server = app
     .listen(port, () => {
       console.info(`App listening on port ${server.address().port}`);
