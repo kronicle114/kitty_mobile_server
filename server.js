@@ -10,6 +10,7 @@ const { dbConnect } = require("./db-mongoose");
 const { router: usersRouter } = require("./users");
 const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 
+console.log("SERVER PORT: ", PORT);
 mongoose.Promise = global.Promise;
 
 // Create an Express application
@@ -88,6 +89,7 @@ app.use(error404);
 app.use(error500);
 
 const runServer = (port = PORT) => {
+  console.log("hmm", PORT);
   const server = app
     .listen(port, () => {
       console.info(`App listening on port ${server.address().port}`);

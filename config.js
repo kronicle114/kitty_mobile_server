@@ -16,12 +16,12 @@
 
 module.exports = {
   PORT: process.env.PORT || 8085,
-  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://127.0.0.1:3000",
+  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://209.6.178.89:3050",
   DATABASE_URL:
     process.env.DATABASE_URL ||
     "mongodb+srv://admin:Kittyserver123%26@kittymobilecluster-5vu4d.mongodb.net/test?retryWrites=true&w=majority",
   TEST_DATABASE_URL:
-    process.env.TEST_DATABASE_URL || "mongodb://127.0.0.1/kitty-backend-test",
+    process.env.TEST_DATABASE_URL || "mongodb://localhost/kitty_development",
   JWT_SECRET: process.env.JWT_SECRET || "really-secret-string",
   JWT_EXPIRY: process.env.JWT_EXPIRY || "7d"
 };
