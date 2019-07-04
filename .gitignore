@@ -57,4 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# I hate those securty warnings
 package-lock.json
