@@ -14,6 +14,7 @@
 2. spin up a daemon, usually do `mongod`
 3. npm start
 4. start doing server stuff (make reqs on endpoints, maybe do the cheese test)
+5. create robust error handlers
 
 ## troubleshooting
 
