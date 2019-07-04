@@ -22,47 +22,38 @@ router.get("/", (req, res, next) => {
     .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
-router.post("/", jsonParser, (req, res) => {
+/* ====== POST/CREATE user on /api/users ====== */
+router.post("/", jsonParser, (req, res, next) => {
   const requiredFields = ["username", "password"];
   const missingField = requiredFields.find(field => !(field in req.body));
 
-  // console.log("req: ", req.body);
   if (missingField) {
-    // console.log("missingfield?: ", missingField);
-    return res.status(422).json({
-      code: 422,
-      reason: "ValidationError",
-      message: "Missing Field",
-      location: missingField
-    });
+    const err = new Error(`missing '${missingField}' in request body`);
+    console.log("the issue:", (err.status = 422));
+    return next(err);
   }
 
-  const stringFields = ["username", "password", "firstName", "lastName"];
+  const stringFields = ["username", "password", "name"];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== "string"
   );
 
   if (nonStringField) {
-    return res.status(422).json({
-      code: 422,
-      reason: "ValidationError",
-      message: "Incorrect field type: expected string",
-      location: nonStringField
-    });
+    const err = new Error(`'${nonStringField}' must be a string`);
+    err.status = 422;
+    return next(err);
   }
 
+  // Validate username and password and email have no whitespace
   const explicityTrimmedFields = ["username", "password"];
   const nonTrimmedField = explicityTrimmedFields.find(
     field => req.body[field].trim() !== req.body[field]
   );
 
   if (nonTrimmedField) {
-    return res.status(422).json({
-      code: 422,
-      reason: "ValidationError",
-      message: "Cannot start or end with whitespace",
-      location: nonTrimmedField
-    });
+    const err = new Error(`'${nonTrimmedField}' cannot have white space.`);
+    err.status = 422;
+    return next(err);
   }
 
   const sizedFields = {
@@ -70,7 +61,7 @@ router.post("/", jsonParser, (req, res) => {
       min: 1
     },
     password: {
-      min: 10,
+      min: 8,
       max: 72
     }
   };
@@ -97,18 +88,13 @@ router.post("/", jsonParser, (req, res) => {
     });
   }
 
-  let {
-    username,
-    password,
-    name = "" /* , firstName = '', lastName = '' */
-  } = req.body;
+  let { username, password, name = "" } = req.body;
   // Username and password come in pre-trimmed, otherwise we throw an error
   // before this
-  // firstName = firstName.trim();
-  // lastName = lastName.trim();
 
+  // check for duplicate usernames
   return User.find({ username })
-    .count()
+    .countDocuments()
     .then(count => {
       if (count > 0) {
         return Promise.reject({
@@ -126,26 +112,22 @@ router.post("/", jsonParser, (req, res) => {
         username,
         password: hash,
         name
-        /*   firstName,
-        lastName */
       });
     })
     .then(user => {
       return res.status(201).json(user.serialize());
     })
     .catch(err => {
-      if (err.reason === "ValidationError") {
-        return res.status(err.code).json(err);
+      if (err.code === 11000) {
+        err = {
+          message: "The username already exists",
+          reason: "ValidationError",
+          location: "username",
+          status: 422
+        };
       }
-      res.status(500).json({ code: 500, message: "Internal server error" });
+      next(err);
     });
-});
-
-/* ======== DELETE IN PRODUCTION ======== */
-router.get("/", (req, res) => {
-  return User.find()
-    .then(users => res.json(users.map(user => user.serialize())))
-    .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
 module.exports = { router };

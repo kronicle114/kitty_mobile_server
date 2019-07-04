@@ -66,3 +66,30 @@ returns an authtoken valid for 7d unless you get booted out or refresh it:
     "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiY2F0MSIsIm5hbWUiOiIiLCJpZCI6IjVkMTVlMWE2NWQyMjE4MzYxMDk1OGZjYyJ9LCJpYXQiOjE1NjE3MTU4MTUsImV4cCI6MTU2MjMyMDYxNSwic3ViIjoiY2F0MSJ9.6irk-Wt79ae8VctSmbQVRd7wmO74jdzSG5WsIyFb4tc"
 }
 ```
+
+## error handler example:
+
+### duplicate user
+
+it's nice if your app checked your db for unique properties. Even better that your error handler points exactly to that error. Check out how I handle this using unique `username` documents
+
+- path POST `http://localhost:8085/api/users/`
+- duplicate username reqbody example (the username `hey` already exists in the mongodb)
+
+```
+{
+	"username": "hey",
+	"password": "kittycat123"
+}
+```
+
+- error response
+
+```json
+{
+  "code": 422,
+  "reason": "ValidationError",
+  "message": "Username already taken",
+  "location": "username"
+}
+```
