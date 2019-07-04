@@ -22,7 +22,6 @@ function dbDisconnect() {
 }
 
 function dbGet() {
-  console.log("geat");
   return mongoose;
 }
 

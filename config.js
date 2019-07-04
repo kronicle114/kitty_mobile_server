@@ -16,7 +16,6 @@
 
 module.exports = {
   PORT: process.env.PORT || 8085,
-  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://209.6.178.89:3050",
   DATABASE_URL:
     process.env.DATABASE_URL ||
     "mongodb+srv://admin:Kittyserver123%26@kittymobilecluster-5vu4d.mongodb.net/test?retryWrites=true&w=majority",
