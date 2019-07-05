@@ -1,5 +1,10 @@
 # Kitty Server Mobile
 
+To-do
+
+1. Protec cats endpoint so only the user can add, delete, and change their cats
+2. get all cats is unprotected though :D
+
 ## Steps
 
 1. Create a mongodDB account through [register](https://cloud.mongodb.com/user?_ga=2.143925813.1205106697.1561888201-84316061.1558637210#/atlas/register/accountProfile)
@@ -92,5 +97,91 @@ it's nice if your app checked your db for unique properties. Even better that yo
   "reason": "ValidationError",
   "message": "Username already taken",
   "location": "username"
+}
+```
+
+## Endpoints
+
+1. POST http://localhost:8085/api/cats/
+
+BODY:
+
+```json
+{
+  "name": "Bruno",
+  "age": 2,
+  "description": "he's a pretty cute cat"
+}
+```
+
+RESPONSE:
+
+```json
+{
+  "_id": "5d1ea56e685f71003693baac",
+  "name": "Bruno",
+  "age": "2",
+  "description": "he's a pretty cute cat",
+  "createdAt": "2019-07-05T01:18:38.963Z",
+  "updatedAt": "2019-07-05T01:18:38.963Z",
+  "__v": 0
+}
+```
+
+2. GET http://localhost:8085/api/cats/
+
+response:
+
+```json
+[
+  {
+    "_id": "5d1ea56e685f71003693baac",
+    "name": "Bruno",
+    "age": "2",
+    "description": "he's a pretty cute cat",
+    "createdAt": "2019-07-05T01:18:38.963Z",
+    "updatedAt": "2019-07-05T01:18:38.963Z",
+    "__v": 0
+  }
+]
+```
+
+3. PUT http://localhost:8085/api/cats/5d1ea56e685f71003693baac
+
+BODY:
+
+```json
+{
+  "name": "Bruno Mars2",
+  "age": 3,
+  "description": "he's a talented mofo cat!!!"
+}
+```
+
+RES:
+
+```json
+{
+  "_id": "5d1ea56e685f71003693baac",
+  "name": "Bruno Mars",
+  "age": "1",
+  "description": "he's a talented mofo cat",
+  "createdAt": "2019-07-05T01:18:38.963Z",
+  "updatedAt": "2019-07-05T01:24:36.985Z",
+  "__v": 0
+}
+```
+
+3. GET by ID
+
+```json
+{
+  "_id": "5d1ea56e685f71003693baac",
+  "name": "Bruno Mars2",
+  "age": "3",
+  "description": "he's a talented mofo cat!!!",
+  "createdAt": "2019-07-05T01:18:38.963Z",
+  "updatedAt": "2019-07-05T01:25:19.873Z",
+  "__v": 0
 }
 ```

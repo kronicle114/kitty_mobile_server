@@ -1,8 +1,6 @@
-"use strict";
 const express = require("express");
 const bodyParser = require("body-parser");
 const { User } = require("./models");
-
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
@@ -89,8 +87,7 @@ router.post("/", jsonParser, (req, res, next) => {
   }
 
   let { username, password, name = "" } = req.body;
-  // Username and password come in pre-trimmed, otherwise we throw an error
-  // before this
+  // Username and password come in pre-trimmed, otherwise we throw an error before this
 
   // check for duplicate usernames
   return User.find({ username })

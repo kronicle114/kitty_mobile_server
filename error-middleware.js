@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 // Custom 404 Not Found route handler
 const error404 = (req, res, next) => {
-  const err = new Error('Not Found');
+  const err = new Error("Not Found");
   err.code = 404;
   next(err);
 };
@@ -19,11 +19,11 @@ const error500 = (err, req, res, next) => {
   } else {
     // eslint-disable-next-line no-console
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error', code: 500 });
+    res.status(500).json({ message: "Internal Server Error", code: 500 });
   }
 };
 
 module.exports = {
   error404,
-  error500,
+  error500
 };
