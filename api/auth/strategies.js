@@ -1,9 +1,8 @@
-'use strict';
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-const { Strategy: LocalStrategy } = require('passport-local');
-
-const { User } = require('../users/models');
-const { JWT_SECRET } = require('../config');
+"use strict";
+const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
+const { Strategy: LocalStrategy } = require("passport-local");
+const { User } = require("../users/models");
+const { JWT_SECRET } = require("../../config");
 
 const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
@@ -12,8 +11,8 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
       user = _user;
       if (!user) {
         return Promise.reject({
-          reason: 'LoginError',
-          message: 'Incorrect username or password'
+          reason: "LoginError",
+          message: "Incorrect username or password"
         });
       }
       return user.validatePassword(password);
@@ -21,14 +20,14 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
     .then(isValid => {
       if (!isValid) {
         return Promise.reject({
-          reason: 'LoginError',
-          message: 'Incorrect username or password'
+          reason: "LoginError",
+          message: "Incorrect username or password"
         });
       }
       return callback(null, user);
     })
     .catch(err => {
-      if (err.reason === 'LoginError') {
+      if (err.reason === "LoginError") {
         return callback(null, false, err);
       }
       return callback(err, false);
@@ -38,15 +37,13 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
 const options = {
   secretOrKey: JWT_SECRET,
   // Look for the JWT as a Bearer auth header
-  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("Bearer"),
   // Only allow HS256 tokens - the same as the ones we issue
-  algorithms: ['HS256']
+  algorithms: ["HS256"]
 };
 
-const jwtStrategy = new JwtStrategy(options,
-  (payload, done) => {
-    done(null, payload.user);
-  }
-);
+const jwtStrategy = new JwtStrategy(options, (payload, done) => {
+  done(null, payload.user);
+});
 
 module.exports = { localStrategy, jwtStrategy };
