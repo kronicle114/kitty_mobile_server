@@ -1,5 +1,7 @@
 # Kitty Server Mobile
 
+I'm using MERN for my server tech stack.
+
 To-do
 
 1. Protec cats endpoint so only the user can add, delete, and change their cats

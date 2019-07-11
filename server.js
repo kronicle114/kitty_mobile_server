@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const { error404, error500 } = require("./error-middleware");
 const { PORT, CLIENT_ORIGIN } = require("./config");
 const { dbConnect } = require("./db-mongoose");
+
+// routers
 const { router: usersRouter } = require("./api/users");
 const {
   router: authRouter,
