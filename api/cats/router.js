@@ -18,7 +18,10 @@ router.get("/", (req, res, next) => {
 
   return Cat.find(filter)
     .exec()
-    .then(docs => res.status(200).json(docs))
+    .then(docs => {
+      console.log("yeah");
+      return res.status(200).json(docs);
+    })
     .catch(err => next(err));
 });
 

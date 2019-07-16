@@ -3,6 +3,7 @@ const { DATABASE_URL } = require("./config");
 mongoose.Promise = global.Promise;
 
 const dbConnect = (url = DATABASE_URL) => {
+  console.log("url heere", DATABASE_URL);
   return mongoose
     .connect(url, {
       useCreateIndex: true,

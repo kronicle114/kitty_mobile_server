@@ -29,19 +29,14 @@ app.use(
   })
 );
 
-// Create a static webserver
-app.use(express.static("public"));
-
-// Parse request body
-app.use(express.json());
-
 app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
 
-cors;
+//allow cross origin communication b/w front-end & backend
+console.log("client: ", CLIENT_ORIGIN);
 app.use(
   cors({
     origin: CLIENT_ORIGIN
@@ -51,7 +46,11 @@ app.use(
 // backup access headers
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization,authorization"
+  );
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
   if (req.method === "OPTIONS") {
     return res.send(204);
@@ -59,7 +58,22 @@ app.use((req, res, next) => {
   next();
 });
 
+// Create a static webserver
+app.use(express.static("public"));
+
+// Parse request body
+app.use(express.json());
+
 // Mount routers
+app.get("/api/s", async (req, res, next) => {
+  try {
+    console.log(" here");
+    res.send("got here");
+  } catch {
+    res.send({ error: error.message });
+  }
+});
+
 app.use("/api/cats", catsRouter);
 
 //requires authToken (protected endpoints)
